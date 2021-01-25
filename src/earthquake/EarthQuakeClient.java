@@ -1,7 +1,6 @@
 package earthquake;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class EarthQuakeClient {
 	public EarthQuakeClient() {
