@@ -105,9 +105,6 @@ public class EarthQuakeClient {
 			double currDist = city.distanceTo(qe.getLocation());
 			System.out.println(currDist + " " + qe.getInfo());
 		}
-		
-		
-		
 	}
 
 	public void createCSV() {
@@ -122,5 +119,43 @@ public class EarthQuakeClient {
 			System.out.println(qe);
 		}
 	}
+	
+	
+	public ArrayList<QuakeEntry> filterByPhrase(ArrayList<QuakeEntry> quakeData, String start, String phrase) { 
+		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>(); 
+		
+		
+		
+		return retList;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
