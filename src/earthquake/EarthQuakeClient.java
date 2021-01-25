@@ -26,10 +26,15 @@ public class EarthQuakeClient {
 	}
 
 	public ArrayList<QuakeEntry> filterByDistanceFrom(ArrayList<QuakeEntry> quakeData, double distMax, Location from) {
-		ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
-		// TODO
-
-		return answer;
+		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
+		for (QuakeEntry qe : quakeData) {
+			double currDist = qe.getLocation().distanceTo(from);
+			if (currDist / 1000 < distMax) { // currDist in meters, distMax in km 
+				retList.add(qe);
+			
+			}
+		}
+		return retList;
 	}
 
 	public void dumpCSV(ArrayList<QuakeEntry> list) {
@@ -59,7 +64,8 @@ public class EarthQuakeClient {
 
 	public void closeToMe() {
 		EarthQuakeParser parser = new EarthQuakeParser();
-		String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+//		String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
 		ArrayList<QuakeEntry> list = parser.read(source);
 		System.out.println("read data for " + list.size() + " quakes");
 
@@ -67,9 +73,16 @@ public class EarthQuakeClient {
 		// Location city = new Location(35.988, -78.907);
 
 		// This location is Bridgeport, CA
-		// Location city = new Location(38.17, -118.82);
+		Location city = new Location(38.17, -118.82);
 
-		// TODO
+		ArrayList<QuakeEntry> closeQuakes = this.filterByDistanceFrom(list, 1000, city);
+		for (QuakeEntry qe : closeQuakes) {
+			double currDist = city.distanceTo(qe.getLocation());
+			System.out.println(currDist + " " + qe.getInfo());
+		}
+		
+		
+		
 	}
 
 	public void createCSV() {
