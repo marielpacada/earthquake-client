@@ -36,6 +36,31 @@ public class EarthQuakeClient {
 		}
 		return retList;
 	}
+	
+	public ArrayList<QuakeEntry> filterByDepth(ArrayList<QuakeEntry> quakeData, double minDepth, double maxDepth) { 
+		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
+		for (QuakeEntry qe : quakeData) { 
+			if (qe.getDepth() > minDepth && qe.getDepth() < maxDepth) { 
+				retList.add(qe);
+			}
+		}
+		return retList;
+	}
+	
+	public void getDeepQuakes() { 
+		EarthQuakeParser parser = new EarthQuakeParser();
+		// String source =
+		// "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+		ArrayList<QuakeEntry> list = parser.read(source);
+		System.out.println("read data for " + list.size() + " quakes");
+
+		ArrayList<QuakeEntry> bigQuakes = this.filterByDepth(list, -10000, -5000);
+		for (QuakeEntry qe : bigQuakes) {
+			System.out.println(qe.getInfo());
+		}
+	}
 
 	public void dumpCSV(ArrayList<QuakeEntry> list) {
 		System.out.println("Latitude,Longitude,Magnitude,Info");
