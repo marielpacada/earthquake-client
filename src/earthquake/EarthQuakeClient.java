@@ -1,6 +1,7 @@
 package earthquake;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class EarthQuakeClient {
 	public EarthQuakeClient() {
@@ -29,25 +30,25 @@ public class EarthQuakeClient {
 		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
 		for (QuakeEntry qe : quakeData) {
 			double currDist = qe.getLocation().distanceTo(from);
-			if (currDist / 1000 < distMax) { // currDist in meters, distMax in km 
+			if (currDist / 1000 < distMax) { // currDist in meters, distMax in km
 				retList.add(qe);
-			
+
 			}
 		}
 		return retList;
 	}
-	
-	public ArrayList<QuakeEntry> filterByDepth(ArrayList<QuakeEntry> quakeData, double minDepth, double maxDepth) { 
+
+	public ArrayList<QuakeEntry> filterByDepth(ArrayList<QuakeEntry> quakeData, double minDepth, double maxDepth) {
 		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
-		for (QuakeEntry qe : quakeData) { 
-			if (qe.getDepth() > minDepth && qe.getDepth() < maxDepth) { 
+		for (QuakeEntry qe : quakeData) {
+			if (qe.getDepth() > minDepth && qe.getDepth() < maxDepth) {
 				retList.add(qe);
 			}
 		}
 		return retList;
 	}
-	
-	public void getDeepQuakes() { 
+
+	public void getDeepQuakes() {
 		EarthQuakeParser parser = new EarthQuakeParser();
 		// String source =
 		// "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
@@ -119,43 +120,52 @@ public class EarthQuakeClient {
 			System.out.println(qe);
 		}
 	}
-	
-	
-	public ArrayList<QuakeEntry> filterByPhrase(ArrayList<QuakeEntry> quakeData, String start, String phrase) { 
-		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>(); 
-		
-		
-		
+
+	public ArrayList<QuakeEntry> filterByPhrase(ArrayList<QuakeEntry> quakeData, String marker, String phrase) {
+		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
+		for (QuakeEntry qe : quakeData) {
+			String[] titleArr = qe.getInfo().split("\\W+");
+//			System.out.println(titleArr);
+			// checks the first index
+			if (marker.equals("start") && titleArr[0].equals(phrase)) {
+				retList.add(qe);
+				// turns array into arraylist and checks if contains anywhere
+			} else if (this.checkAnyPhrase(qe.getInfo(), phrase)) {
+				retList.add(qe);
+				// checks the last index
+			} else if (marker.equals("end") && titleArr[titleArr.length - 1].equals(phrase)) {
+
+				retList.add(qe);
+			}
+		}
 		return retList;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+	private boolean checkAnyPhrase(String title, String phrase) {
+		int index = 0;
+		while (index < title.length() - phrase.length()) {
+			if (title.substring(index, index + 1).equals(phrase.substring(0, 1))
+					&& title.substring(index, index + phrase.length()).equals(phrase)) {
+				return true;
+			}
+			index++;
+		}
+		return false;
+	}
+
+	public void getQuakesByPhrase() {
+		EarthQuakeParser parser = new EarthQuakeParser();
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+//		String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
+		ArrayList<QuakeEntry> list = parser.read(source);
+		System.out.println("read data for " + list.size() + " quakes");
+
+		ArrayList<QuakeEntry> quakesWithPhrase = this.filterByPhrase(list, "any", "Can");
+		for (QuakeEntry qe : quakesWithPhrase) {
+//			System.out.println("hello");
+			System.out.println(qe.toString());
+		}
+		System.out.println("quakes found: " + quakesWithPhrase.size());
+	}
 
 }

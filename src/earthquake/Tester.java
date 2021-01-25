@@ -18,4 +18,9 @@ public class Tester {
 		EarthQuakeClient c = new EarthQuakeClient(); 
 		c.getDeepQuakes();
 	}
+	
+	public void testGetPhraseQuakes() { 
+		EarthQuakeClient c = new EarthQuakeClient(); 
+		c.getQuakesByPhrase();
+	}
 }
