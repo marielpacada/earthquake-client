@@ -9,7 +9,8 @@ public class App {
 //		t.testCloseToMe();
 //		t.testGetDeepQuakes();
 //		t.testGetPhraseQuakes();
-		t.testClosestQuakes();
+//		t.testClosestQuakes();
+		t.testLargestQuakes();
 	}
 	
 }

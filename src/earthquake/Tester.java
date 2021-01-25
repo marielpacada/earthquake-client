@@ -26,5 +26,10 @@ public class Tester {
 		ClosestQuakes c = new ClosestQuakes();
 		c.findClosestQuakes();
 	}
+	
+	public void testLargestQuakes() { 
+		LargestQuakes l = new LargestQuakes(); 
+		l.findLargestQuakes();
+	}
 
 }
