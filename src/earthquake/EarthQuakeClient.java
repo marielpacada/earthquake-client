@@ -7,11 +7,22 @@ public class EarthQuakeClient {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Filters out quakes in array list with bigger magnitudes than given parameter
+	 * 
+	 * @param quakeData
+	 * @param magMin
+	 * @return
+	 */
 	public ArrayList<QuakeEntry> filterByMagnitude(ArrayList<QuakeEntry> quakeData, double magMin) {
-		ArrayList<QuakeEntry> answer = new ArrayList<QuakeEntry>();
-		// TODO
+		ArrayList<QuakeEntry> retList = new ArrayList<QuakeEntry>();
+		for (QuakeEntry qe : quakeData) {
+			if (qe.getMagnitude() > magMin) {
+				retList.add(qe);
+			}
+		}
 
-		return answer;
+		return retList;
 	}
 
 	public ArrayList<QuakeEntry> filterByDistanceFrom(ArrayList<QuakeEntry> quakeData, double distMax, Location from) {
@@ -30,13 +41,19 @@ public class EarthQuakeClient {
 
 	}
 
-	public void bigQuakes() {
+	public void getBigQuakes() {
 		EarthQuakeParser parser = new EarthQuakeParser();
 		// String source =
 		// "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
-		String source = "data/nov20quakedata.atom";
+
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
 		ArrayList<QuakeEntry> list = parser.read(source);
 		System.out.println("read data for " + list.size() + " quakes");
+
+		ArrayList<QuakeEntry> bigQuakes = this.filterByMagnitude(list, 5.0);
+		for (QuakeEntry qe : bigQuakes) {
+			System.out.println(qe.getInfo());
+		}
 
 	}
 
