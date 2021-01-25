@@ -6,7 +6,9 @@ public class App {
 	
 	public static void main(String[] argv) { 
 //		t.testGetBigQuakes();
-		t.testCloseToMe();
+//		t.testCloseToMe();
+//		t.testGetDeepQuakes();
+		t.testGetPhraseQuakes();
 	}
 	
 }

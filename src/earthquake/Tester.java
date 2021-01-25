@@ -13,4 +13,14 @@ public class Tester {
 		EarthQuakeClient c = new EarthQuakeClient(); 
 		c.closeToMe();
 	}
+	
+	public void testGetDeepQuakes() { 
+		EarthQuakeClient c = new EarthQuakeClient(); 
+		c.getDeepQuakes();
+	}
+	
+	public void testGetPhraseQuakes() { 
+		EarthQuakeClient c = new EarthQuakeClient(); 
+		c.getQuakesByPhrase();
+	}
 }
