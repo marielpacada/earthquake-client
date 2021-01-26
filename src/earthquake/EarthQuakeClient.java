@@ -52,14 +52,16 @@ public class EarthQuakeClient {
 		// String source =
 		// "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
 
-		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedata.atom";
 		ArrayList<QuakeEntry> list = parser.read(source);
 		System.out.println("read data for " + list.size() + " quakes");
 
-		ArrayList<QuakeEntry> bigQuakes = this.filterByDepth(list, -10000, -5000);
+		ArrayList<QuakeEntry> bigQuakes = this.filterByDepth(list, -8000, -5000);
 		for (QuakeEntry qe : bigQuakes) {
 			System.out.println(qe.getInfo());
 		}
+		
+		System.out.println(bigQuakes.size());
 	}
 
 	public void dumpCSV(ArrayList<QuakeEntry> list) {
@@ -154,12 +156,12 @@ public class EarthQuakeClient {
 
 	public void getQuakesByPhrase() {
 		EarthQuakeParser parser = new EarthQuakeParser();
-		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedata.atom";
 //		String source = "http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.atom";
 		ArrayList<QuakeEntry> list = parser.read(source);
 		System.out.println("read data for " + list.size() + " quakes");
 
-		ArrayList<QuakeEntry> quakesWithPhrase = this.filterByPhrase(list, "any", "Can");
+		ArrayList<QuakeEntry> quakesWithPhrase = this.filterByPhrase(list, "any", "Creek");
 		for (QuakeEntry qe : quakesWithPhrase) {
 //			System.out.println("hello");
 			System.out.println(qe.toString());

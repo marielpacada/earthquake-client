@@ -6,7 +6,7 @@ public class LargestQuakes {
 
 	public void findLargestQuakes() {
 		EarthQuakeParser parser = new EarthQuakeParser();
-		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedatasmall.atom";
+		String source = "/Users/marielpacada/eclipse-workspace/earthquake-client/data/nov20quakedata.atom";
 		ArrayList<QuakeEntry> list = parser.read(source);
 		System.out.println("read data for " + list.size() + " quakes");
 		
